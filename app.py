@@ -3,10 +3,11 @@ import os
 import aws_cdk as cdk
 from s3_bucket.s3_bucket_stack import S3BucketStack
 from s3_bucket.ec2_instance_stack import Ec2InstanceStack
-
+from s3_bucket.lambda_stack import lambda_stack
 
 app = cdk.App()
 
+# for s3 bucket deploy
 # S3BucketStack(app, "S3BucketStack",
 #     # If you don't specify 'env', this stack will be environment-agnostic.
 #     # Account/Region-dependent features and context lookups will not work,
@@ -29,6 +30,7 @@ app = cdk.App()
 #     # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
 #     )
 
+# for ec2 deploy
 Ec2InstanceStack(app, "EC2Instance", 
 
     #env=cdk.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
@@ -36,5 +38,15 @@ Ec2InstanceStack(app, "EC2Instance",
     #env=cdk.Environment(account='12345678', region='us-east-1'),
                       
     )
+
+# for api with lambda deploy
+lambda_stack(app, "lambda-stack-api",
+    
+    #env=cdk.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
+
+    #env=cdk.Environment(account='12345678', region='us-east-1'),
+    
+    )
+
 
 app.synth()
